@@ -25,8 +25,8 @@ PRIMARY KEY(id)
 FOREIGN KEY (depto) REFERENCES depto(codigo))
 
 INSERT INTO servico VALUES
-(1, 'Orçamento', 20.00),
-(2, 'Manutenção preventiva', 85.00)
+(1, 'OrÃ§amento', 20.00),
+(2, 'ManutenÃ§Ã£o preventiva', 85.00)
 
 INSERT INTO depto (codigo, nome) VALUES
 (1,'RH'),
@@ -64,24 +64,19 @@ BEGIN
 	SET @depa_insere = (SELECT COUNT(*) FROM INSERTED)
 	
 	
-	-- código do departamento
-	IF(@depa_insere = 1)
-	BEGIN
-		SET @depa_codigo = (SELECT depto FROM INSERTED)
-	END
-
-	ELSE
-	BEGIN
-		SET @depa_codigo = (SELECT depto FROM DELETED)
-	END
+	-- cÃ³digo do departamento
+    SET @depa_codigo =
+       CASE when @depa_insere = 1 then (SELECT depto FROM INSERTED)
+            when @depa_insere <>1 then (SELECT depto FROM DELETED)
+       END
 	   	  
-	--salário novo [INSERTED], salário antigo [DELETED] 
+	--salÃ¡rio novo [INSERTED], salÃ¡rio antigo [DELETED] 
 	
 	SET @salario = (SELECT salario FROM INSERTED)
 	SET @salario_antigo = (SELECT salario FROM DELETED)
 	
 	
-	--Busca salário na tabela departamento
+	--Busca salÃ¡rio na tabela departamento
 		
 	SET @depa_salario = (SELECT total_salarios FROM depto WHERE codigo = @depa_codigo)
 	
@@ -91,7 +86,7 @@ BEGIN
 	END
 	
 
-	--INSERT soma o total dos salário + salario atual
+	--INSERT soma o total dos salÃ¡rio + salario atual
 	IF(@depa_insere = 1 AND @depa_apaga = 0)
 	BEGIN
 		UPDATE depto 
