@@ -141,6 +141,6 @@ BEGIN
 	FROM campeonato,times 
 	WHERE campeonato.nome_Time=times.codigo
 	
-	UPDATE @tabela SET pontos  = (vitorias *3)+ Empates
+	UPDATE @tabela SET pontos  = (vitorias *3)+ empates
 	RETURN
 END
