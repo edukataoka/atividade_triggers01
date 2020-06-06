@@ -68,7 +68,7 @@ BEGIN
      (CASE
       WHEN (@depa_insere = 1 AND @depa_apaga = 0) THEN  @depa_salario + @salario   --INSERT
       WHEN (@depa_insere = 0 AND @depa_apaga = 1) THEN @depa_salario - @salario_antigo  -- DELETE
-      WHEN (@depa_insere = 1 AND @depa_apaga = 1) THEN @depa_salario - (@salario_antigo - @salario) --UPDATE
+      -- WHEN (@depa_insere = 1 AND @depa_apaga = 1) THEN @depa_salario - (@salario_antigo - @salario) --UPDATE
       WHEN (@salario_antigo > @salario) THEN @depa_salario - (@salario_antigo - @salario)
       WHEN (@salario_antigo < @salario) THEN @depa_salario + (@salario - @salario_antigo)
 	  END)
